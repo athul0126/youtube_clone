@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_clone/constants/sizedboxes.dart';
+import 'package:youtube_clone/features/auth/repository/auth_service.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -15,7 +17,7 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 180, left: 20, right: 20),
               child: Image.asset(
                 "assets/images/youtube-signin.png",
-                height: 150,
+                height: 100,
               ),
             ),
             const Text(
@@ -29,14 +31,14 @@ class LoginPage extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
                 child: GestureDetector(
-                  onTap: () {
-                    print("object");
+                  onTap: () async {
+                    await ref.read(authServiceProvider).signInWithGoogle();
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      border:Border.all(color: Colors.grey),
-                      borderRadius: const BorderRadius.all(Radius.circular(10))
-                    ),
+                        border: Border.all(color: Colors.grey),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
